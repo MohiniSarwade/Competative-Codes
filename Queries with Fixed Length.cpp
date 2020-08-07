@@ -1,3 +1,8 @@
+/*Consider an -integer sequence,A={a0,a1,a2,...an-1}. We perform a query on A by using an integer,d, to calculate the result of the following expression:
+                                                    min    (max   aj)
+                                                   0<=i<=n-d    i<=j<i+d 
+in other words, if we let mi=max(ai,ai+1,....ai+d-1) , then you need to calculate min(m0,m1,...mn-d).Given A and q queries (each query consists of an integer, d), print the result of each query on a new line.
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
