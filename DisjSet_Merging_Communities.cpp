@@ -1,3 +1,5 @@
+//https://www.hackerrank.com/challenges/merging-communities/problem
+
 #include <cmath>
 #include <cstdio>
 #include <vector>
