@@ -1,0 +1,38 @@
+/* Given an array nums and an integer target.
+Return the maximum number of non-empty non-overlapping subarrays such that the sum of values in each subarray is equal to target.
+https://leetcode.com/contest/weekly-contest-201/problems/maximum-number-of-non-overlapping-subarrays-with-sum-equals-target/
+*/
+
+#include<bits/stdc++.h>
+
+class Solution {
+public:
+    int maxNonOverlapping(vector<int>& nums, int target) {
+        
+        map<int,int>mp;
+        mp.insert({0,-1});
+        
+        int running=0;
+        int best[nums.size()];
+        for(int i=0;i<nums.size();i++)
+            best[i]=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            running+=nums[i];
+            
+            if(mp.find(running-target)!=mp.end())
+            {
+                if(mp[running-target]>=0)
+                    best[i]=best[mp[running-target]]+1;
+                else
+                    best[i]=1;
+            }
+            mp[running]=i;
+            if(i>=1)
+                best[i]=max(best[i],best[i-1]);
+            
+        }
+        
+        return best[nums.size()-1];
+    }
+};
