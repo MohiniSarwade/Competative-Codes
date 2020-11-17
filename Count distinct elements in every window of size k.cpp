@@ -27,3 +27,24 @@ vector <int> countDistinct (int A[], int n, int k)
     }
     return v;
 }
+
+/////////////////////////////////////////////////////////////////////////////////
+vector <int> countDistinct (int A[], int n, int k)
+{
+    //code here.
+    vector<int>v;
+    unordered_map<int,int>mp;
+    int i;
+    for(i=0;i<k;i++)
+        mp[A[i]]++;
+    for(i=k;i<n;i++)
+    {
+        v.push_back(mp.size());
+        mp[A[i-k]]--;
+        if(mp[A[i-k]]<=0)
+            mp.erase(A[i-k]);
+        mp[A[i]]++;
+    }
+    v.push_back(mp.size());
+    return v;
+}
