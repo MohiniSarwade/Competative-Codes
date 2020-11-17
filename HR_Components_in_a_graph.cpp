@@ -114,3 +114,91 @@ int main()
 
     return 0;
 }
+/////////////////////////////////////////////////////////////////////
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+/*
+ * Complete the componentsInGraph function below.
+ */
+ void DFS(list<int>*l,int n, int i, int &count, bool vist[])
+ {
+     vist[i]=true;
+     count++;
+     for(auto it=l[i].begin();it!=l[i].end();it++)
+        if(vist[*it]==false)
+            DFS(l,n,*it,count,vist);
+ }
+ void find(list<int>*l,int& min, int& max, int n)
+ {
+     bool vist[n];
+     memset(vist,0,sizeof(vist));
+     for(int i=0;i<n;i++)
+     {
+         int count=0;
+         if(vist[i]==false)
+            DFS(l,n,i,count,vist);
+         if(count<min && count>1)
+            min=count;
+         if(count>max)
+            max=count;
+     }
+ }
+vector<int> componentsInGraph(vector<vector<int>> gb) {
+    /*
+     * Write your code here.
+     */
+     list<int>*l=new list<int>[gb.size()*2];
+     for(int i=0;i<gb.size();i++)
+    {
+        l[gb[i][0]-1].push_back(gb[i][1]-1);
+        l[gb[i][1]-1].push_back(gb[i][0]-1);
+    }  
+    int min=INT_MAX,max=INT_MIN;
+    int n=gb.size()*2;
+    find(l,min,max,n);
+    vector<int>v(2);
+    v[0]=min;
+    v[1]=max;
+    return v;
+
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int n;
+    cin >> n;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    vector<vector<int>> gb(n);
+    for (int gb_row_itr = 0; gb_row_itr < n; gb_row_itr++) {
+        gb[gb_row_itr].resize(2);
+
+        for (int gb_column_itr = 0; gb_column_itr < 2; gb_column_itr++) {
+            cin >> gb[gb_row_itr][gb_column_itr];
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+
+    vector<int> SPACE = componentsInGraph(gb);
+
+    for (int SPACE_itr = 0; SPACE_itr < SPACE.size(); SPACE_itr++) {
+        fout << SPACE[SPACE_itr];
+
+        if (SPACE_itr != SPACE.size() - 1) {
+            fout << " ";
+        }
+    }
+
+    fout << "\n";
+
+    fout.close();
+
+    return 0;
+}
